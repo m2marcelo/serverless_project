@@ -33,8 +33,16 @@ functions:
       - http:
           method: get
           path: todos
+          cors: true
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.CREATED_AT_INDEX}
 
   # TODO: Configure this function
+  CreateTodo:
   handler: src/lambda/http/createTodo.handler
     events:
       - http:
@@ -77,6 +85,14 @@ functions:
       - http:
           method: post
           path: todos/{todoId}/attachment
+          cors: true
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+          - s3:GetObject
+        Resource: arn:aws:s3:::${self:provider.environment.TODO_IMAGES_S3_BUCKET}/*
 
 resources:
   Resources:
