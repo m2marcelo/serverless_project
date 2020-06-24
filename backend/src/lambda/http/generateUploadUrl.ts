@@ -16,7 +16,7 @@ const s3 = new XAWS.S3({
 })
 
 const bucketName = process.env.TODO_IMAGES_S3_BUCKET
-const urlExpiration = process.env.SIGNED_URL_EXPIRATION
+// const urlExpiration = process.env.SIGNED_URL_EXPIRATION
 
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
@@ -52,6 +52,6 @@ function getUploadUrl(todoId: string) {
   return s3.getSignedUrl('putObject', {
     Bucket: bucketName,
     Key: todoId,
-    Expires: urlExpiration
+    Expires: 300
   })
 }
