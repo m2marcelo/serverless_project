@@ -22,6 +22,10 @@ provider:
     SIGNED_URL_EXPIRATION: 300
 
 custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+
   documentation:
     api:
       info:
@@ -31,10 +35,10 @@ custom:
     models:
       - name: CreateRequest
         contentType: application/json
-        schema: ${file(validators/create-request.json)}
+        schema: ${file(src/validators/create-request.json)}
       - name: UpdateRequest
         contentType: application/json
-        schema: ${file(validators/update-request.json)}
+        schema: ${file(src/validators/update-request.json)}
 functions:
 
   Auth:
@@ -57,7 +61,7 @@ functions:
 
   # TODO: Configure this function
   CreateTodo:
-  handler: src/lambda/http/createTodo.handler
+    handler: src/lambda/http/createTodo.handler
     events:
       - http:
           method: post
