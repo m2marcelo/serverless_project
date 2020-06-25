@@ -1,4 +1,4 @@
-import * as uuid from 'uuid'
+// import * as uuid from 'uuid'
 import { TodoItem } from '../models/TodoItem'
 import { TodoAccess } from '../dataLayer/accessTodo'
 import { CreateTodoRequest } from '../requests/CreateTodoRequest'
@@ -12,12 +12,15 @@ const todoAccess = new TodoAccess()
 const bucketName = process.env.TODO_IMAGES_S3_BUCKET
 
 export async function createTodo(
+  itemId: string,
   createTodoRequest: CreateTodoRequest,
   userId: string
 ): Promise<TodoItem> {
   logger.info('Generating uuid...')
 
-  const itemId = uuid.v4()
+  // const itemId = uuid.v4()
+
+  logger.info(`itemId in todo.ts = ${itemId}`)
 
   return await todoAccess.createTodo({
     todoId: itemId,
